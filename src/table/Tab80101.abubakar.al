@@ -1,4 +1,4 @@
-table 50101 abubakar
+table 80101 abubakar
 {
     DataClassification = ToBeClassified;
 

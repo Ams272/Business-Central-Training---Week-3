@@ -6,7 +6,7 @@ namespace DefaultPublisher.MyFirstProject;
 
 using Microsoft.Sales.Customer;
 
-pageextension 50100 CustomerListExt extends "Customer List"
+pageextension 80100 CustomerListExt extends "Customer List"
 {
     trigger OnOpenPage();
     begin
