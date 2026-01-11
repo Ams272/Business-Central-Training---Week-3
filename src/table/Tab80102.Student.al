@@ -22,6 +22,47 @@ table 80102 Student
         {
 
         }
+        field(50; "Class Teacher"; Blob)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(60; "Student Phone no"; Text[100])
+        {
+
+        }
+        field(70; "Age"; Text[100])
+        {
+
+        }
+        field(80; "Date of birth"; date)
+        {
+
+        }
+        field(90; "Value 1"; integer)
+        {
+
+        }
+        field(100; "Value 2"; integer)
+        {
+
+        }
+        field(110; "Result"; integer)
+        {
+
+        }
+
+        field(120; "Filter 1"; Text[30])
+        {
+
+        }
+        field(130; "Filter 2"; Text[30])
+        {
+
+        }
+        field(140; "Filter 3"; Text[30])
+        {
+
+        }
     }
 
     keys
@@ -29,9 +70,19 @@ table 80102 Student
         key(PK; "Matric No.")
         {
             Clustered = true;
+
         }
 
 
+    }
+
+    fieldgroups
+    {
+        // Add changes to field groups here
+        fieldgroup(DropDown; "Matric No.", "Student Name", "Student Email")
+        {
+
+        }
     }
 
 }

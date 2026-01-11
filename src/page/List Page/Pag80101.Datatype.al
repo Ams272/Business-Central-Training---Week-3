@@ -17,6 +17,17 @@ Page 80101 Datatype
                 {
                     ToolTip = 'This field is used to specify the serial number of this record';
 
+                    trigger OnValidate()
+                    begin
+
+                    end;
+
+                    trigger OnDrillDown()
+                    begin
+
+                    end;
+
+
                 }
 
                 field(CostofItem; Rec.CostofItem)
@@ -91,4 +102,18 @@ Page 80101 Datatype
             }
         }
     }
+
+
+    trigger OnOpenPage()
+    begin
+        Message('The Student List page is now open.');
+    end;
+
+    trigger OnClosePage()
+    begin
+        Message('The Student List page is now closed.');
+    end;
+
+    // trigger
+
 }

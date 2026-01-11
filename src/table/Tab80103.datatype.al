@@ -8,18 +8,27 @@ table 80103 datatype
         {
             DataClassification = CustomerContent;
             AutoIncrement = true;
+
+
         }
         field(2; MatricNo; Code[20])
         {
             DataClassification = CustomerContent;
             Description = 'Matriculation Number of the Student';
-            Editable = false;
+            // Editable = false;
+            TableRelation = Student."Matric No.";
+
+            trigger OnValidate()
+            begin
+                Message('Hurray, you have entered  your matric number %1', Rec.MatricNo);
+            end;
         }
         field(3; Name; Text[70])
         {
             DataClassification = CustomerContent;
             // MaskType = Concealed;
             // TableRelation
+
         }
         field(4; CostofItem; decimal)
         {
@@ -54,6 +63,7 @@ table 80103 datatype
             DataClassification = CustomerContent;
             optionmembers = NotGraduated,Graduated,OnHold,pending;
             Caption = 'Graduation Status';
+
         }
         field(11; "Graduation Category"; Enum graduationCategory)
         {
@@ -84,29 +94,31 @@ table 80103 datatype
     fieldgroups
     {
         // Add changes to field groups here
+        fieldgroup(DropDown; SerialNo, Name) { }
     }
 
     var
-        myInt: Integer;
+        firstVariable: Integer;
 
     trigger OnInsert()
     begin
-
+        Message('A new record with Serial No %1 is being inserted', Rec.SerialNo);
     end;
 
     trigger OnModify()
     begin
-
+        Message('A record with Serial No %1 is being modified', Rec.SerialNo);
     end;
+
 
     trigger OnDelete()
     begin
-
+        Message('A record with Serial No %1 is being deleted', Rec.SerialNo);
     end;
 
     trigger OnRename()
     begin
-
+        Message('A record with Serial No %1 is being renamed', Rec.SerialNo);
     end;
 
 }
