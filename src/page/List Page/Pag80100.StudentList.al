@@ -32,7 +32,10 @@ Page 80100 "Student List"
                 }
                 field("Student Email"; Rec."Student Email")
                 {
-
+                    trigger OnValidate()
+                    begin
+                        mynewfunctio();
+                    end;
                 }
             }
 
@@ -50,6 +53,67 @@ Page 80100 "Student List"
         area(Processing)
         {
 
+            action(PassByValue)
+            {
+                ApplicationArea = All;
+                Image = Email;
+                trigger OnAction()
+                var
+                    StudentMgmt: Codeunit "Student Management";
+                    myReturnValue: Integer;
+                    myBooleanValue: Boolean;
+                    myText: Text[30];
+
+                begin
+
+                    myText := 'Aminu';
+                    Message('Text before calling PassByValueExample: %1', myText);
+                    StudentMgmt.passByValueExample(myText);
+                    Message('Text after calling PassByValueExample: %1', myText);
+
+                end;
+            }
+
+            action(PassByReference)
+            {
+                ApplicationArea = All;
+                Image = Email;
+                trigger OnAction()
+                var
+                    StudentMgmt: Codeunit "Student Management";
+                    myReturnValue: Integer;
+                    myBooleanValue: Boolean;
+                    myText: Text[30];
+
+                begin
+
+                    myText := 'Aminu';
+                    Message('Text before calling passbyreferenceexample: %1', myText);
+                    StudentMgmt.passbyreferenceexample(myText);
+                    Message('Text after calling passbyreferenceexample: %1', myText);
+
+                end;
+            }
+            action(ModifyEmail)
+            {
+                ApplicationArea = All;
+                Image = Email;
+                trigger OnAction()
+                var
+                    StudentMgmt: Codeunit "Student Management";
+                    myReturnValue: Integer;
+                    myBooleanValue: Boolean;
+                    myText: Text[30];
+
+                begin
+
+                    myBooleanValue := StudentMgmt.UpdateStudentEmail(Rec."Matric No.", 'mynewemail@yahoo.com');
+
+                    Message('Return Value from UpdateStudentEmail procedure is %1', myBooleanValue);
+
+                end;
+            }
+
             action(FilterRecordSetRange)
             {
                 ApplicationArea = All;
@@ -57,18 +121,13 @@ Page 80100 "Student List"
                 Image = Filter;
                 trigger OnAction()
                 var
-                    studentRecord: Record Student;
-                    CustomerRec: Record Customer;
-                begin
-                    studentRecord.Reset();
-                    studentRecord.SetRange("Matric No.", '10000', '10012');
-                    if studentRecord.FindSet() then begin
-                        repeat
-                            studentRecord."Student Name" := studentRecord."Student Name" + ' - Filtered';
-                            studentRecord.Modify();
 
-                        until studentRecord.Next() = 0;
-                    end;
+                    StudentMgmt: Codeunit "Student Management";
+                begin
+                    // StudentMgmt.setFilterForStudentRecord();
+
+                    StudentMgmt.GetStudentDetails(Rec."Matric No.");
+
                 end;
             }
 
@@ -79,27 +138,51 @@ Page 80100 "Student List"
                 Image = FilterLines;
                 trigger OnAction()
                 var
-                    studentRecord: Record Student;
-                    studentRecord2: Record Student;
 
-                    CustomerRec: Record Customer;
+                    StudentMgmt: Codeunit "Student Management";
                 begin
-                    studentRecord2.Get('10012');
+                    // StudentMgmt.setRangeForStudentRecord();
+
+                    StudentMgmt.GetStudentDetails('7501');
+
+                end;
+            }
+
+            action(IsEmpty)
+            {
+                ApplicationArea = All;
+                Caption = 'Check If Record Set is Empty';
+                Image = CheckList;
 
 
+                trigger OnAction()
+                var
+                    studentRecord, studentRecord2 : Record Student;
+                begin
                     studentRecord.Reset();
-                    studentRecord.SetFilter("Matric No.", '%1..%2|%3', studentRecord2."Filter 1", studentRecord2."Filter 2", studentRecord2."Filter 3");
+                    studentRecord.SetRange("Matric No.", '7500', '8000');
+                    if studentRecord.IsEmpty() then begin
 
-                    if studentRecord.FindSet() then begin
-                        repeat
-                            studentRecord."Student Name" := studentRecord."Student Name" + ' - Filtered';
-                            studentRecord.Modify();
+                        studentRecord2.Init();
+                        studentRecord2."Matric No." := '7501';
+                        studentRecord2."Student Name" := 'Adekunle Gbadamosi';
+                        studentRecord2."Student Address" := 'Ikoyi, Lagos State';
+                        studentRecord2."Student Email" := 'adekunle.gbadamosi@gmail.com';
+                        studentRecord2."Student Phone no" := '08012345678';
+                        studentRecord2."Date of birth" := DMY2Date(15, 5, 2000);
+                        studentRecord2.Insert();
 
-                        until studentRecord.Next() = 0;
+
+                    end
+                    else begin
+                        Error('Record Set is not Empty');
                     end;
+
+
                 end;
             }
         }
+
 
         area(Navigation)
         {
@@ -126,11 +209,34 @@ Page 80100 "Student List"
 
                 trigger OnAction()
                 begin
-
+                    mynewfunctio()
                 end;
             }
         }
     }
+
+
+
+    trigger OnOpenPage()
+    var
+        StudentMgt: Codeunit "Student Management";
+    begin
+        // StudentMgt.learnArray();
+
+        StudentMgt.learnList();
+
+    end;
+
+
+    procedure mynewfunctio()
+    begin
+
+    end;
+
+    var
+
+
+
 
 
 }
