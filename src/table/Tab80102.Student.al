@@ -61,8 +61,68 @@ table 80102 Student
         }
         field(140; "Filter 3"; Text[30])
         {
-
+            FieldClass = FlowFilter;
         }
+        field(145; "Customer ID"; Code[50])
+        {
+            // DataClassification = CustomerContent;
+            TableRelation = Customer."No.";
+        }
+        field(150; "Customer Name"; Text[100])
+        {
+            // DataClassification = CustomerContent;
+            FieldClass = FlowField;
+            CalcFormula = lookup(Customer.Name where("No." = field("Customer ID")));
+        }
+        field(155; "Sales Document No."; Code[50])
+        {
+            // DataClassification = CustomerContent;
+            TableRelation = "Sales Header"."No.";
+        }
+        field(160; "Total Amount"; Decimal)
+        {
+            // DataClassification = CustomerContent;
+            FieldClass = FlowField;
+            Editable = false;
+            CalcFormula = sum("Sales Line"."Line Amount" where("Document No." = field("Sales Document No."), "Document Type" = const(Order)));
+        }
+        field(170; "Average Amount"; Decimal)
+        {
+            // DataClassification = CustomerContent;
+            FieldClass = FlowField;
+            Editable = false;
+            CalcFormula = average("Sales Line"."Line Amount" where("Document No." = field("Sales Document No."), "Document Type" = const(Order)));
+        }
+
+        field(180; "Mininum"; Decimal)
+        {
+            // DataClassification = CustomerContent;
+            FieldClass = FlowField;
+            Editable = false;
+            CalcFormula = min("Sales Line"."Line Amount" where("Document No." = field("Sales Document No."), "Document Type" = const(Order)));
+        }
+        field(190; "Maximum"; Decimal)
+        {
+            // DataClassification = CustomerContent;
+            FieldClass = FlowField;
+            Editable = false;
+            CalcFormula = max("Sales Line"."Line Amount" where("Document No." = field("Sales Document No."), "Document Type" = const(Order)));
+        }
+        field(200; "Count"; Integer)
+        {
+            // DataClassification = CustomerContent;
+            FieldClass = FlowField;
+            Editable = false;
+            CalcFormula = count("Sales Line" where("Document No." = field("Sales Document No."), "Document Type" = const(Order)));
+        }
+        field(210; "Exist"; Boolean)
+        {
+            // DataClassification = CustomerContent;
+            FieldClass = FlowField;
+            Editable = false;
+            CalcFormula = exist("Sales Header" where("No." = field("Sales Document No."), "Document Type" = const(Order)));
+        }
+
     }
 
     keys

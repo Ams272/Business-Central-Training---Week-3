@@ -237,4 +237,98 @@ codeunit 80100 "Student Management"
     end;
 
 
+    procedure learnDictionary()
+    var
+        testDictionary: Dictionary of [Text[30], Text[70]];
+        dictionnaryValue: Text[30];
+
+        testKey: Text[20];
+
+        returnValue: Boolean;
+        countReturnValue: Integer;
+        listReturnValue: List of [Text[30]];
+
+        key1index1, key2Index2, key3Index3 : Text[20];
+
+        studentTable: Record Student;
+
+        index: Integer;
+        dictionaryValue: Text[70];
+    begin
+
+        // testDictionary.Add('005', 'Eraser');
+        // testDictionary.Add('002', 'Biro');
+        // testDictionary.Add('008', 'Pencil');
+
+        // testKey := '002';
+
+        // // dictionnaryValue := testDictionary.Get(testKey);
+
+        // // returnValue := testDictionary.ContainsKey(testKey);
+
+        // countReturnValue := testDictionary.Count();
+
+        // listReturnValue := testDictionary.Keys(); // ['005','002','008'];
+
+        // listReturnValue.Get(1, key1index1);
+        // listReturnValue.Get(2, key2Index2);
+        // listReturnValue.Get(3, key3Index3);
+
+        // Message('Key 1: %1, Key 2: %2, Key 3: %3', key1index1, key2Index2, key3Index3);
+
+        // Message('The total count of this dictionary is : %1', countReturnValue);
+
+        // if testDictionary.ContainsKey(testKey) = true then
+        //     Message('The Key %1 exist in the dictionary', testKey)
+        // else
+        //     Message('The Key %1 does not exist in the dictionary', testKey);
+
+
+
+        // if testDictionary.ContainsKey(testKey) = true then
+        //     Message('The Key %1 exist in the dictionary', testKey)
+        // else
+        //     Message('The Key %1 does not exist in the dictionary', testKey);
+
+        // testDictionary.Remove(testKey);
+
+        // if testDictionary.ContainsKey(testKey) = true then
+        //     Message('The Key %1 exist in the dictionary', testKey)
+        // else
+        //     Message('The Key %1 does not exist in the dictionary', testKey);
+
+        // Message('The value for key %1 before is %2', testKey, testDictionary.Get(testKey));
+        // testDictionary.Set(testKey, 'ruler');
+        // Message('The value for key %1 after is %2', testKey, testDictionary.Get(testKey));
+
+
+
+        // Message('The value associated with Key: %1, is value: %2', testKey, dictionnaryValue);
+
+        Clear(testDictionary);
+
+        studentTable.Reset();
+        if studentTable.FindSet() then
+            repeat
+
+                testDictionary.Add(studentTable."Matric No.", studentTable."Student Name");
+
+            until studentTable.Next() = 0;
+
+
+        index := 0;
+        listReturnValue := testDictionary.Keys(); //['10012',10013,'10014']
+
+        for index := 1 to testDictionary.Count do begin
+
+            dictionaryValue := testDictionary.Get(listReturnValue.Get(index));
+
+            Message('The Value (Student Name) for index(matric number) %1 is : %2', listReturnValue.Get(index), dictionaryValue);
+
+        end;
+
+
+    end;
+
+
 }

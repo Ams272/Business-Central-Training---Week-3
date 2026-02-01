@@ -2,7 +2,7 @@ page 80103 StudentCard
 {
     PageType = Card;
     ApplicationArea = All;
-    UsageCategory = Administration;
+    // UsageCategory = Administration;
     SourceTable = Student;
 
     layout
@@ -76,6 +76,48 @@ page 80103 StudentCard
                 }
             }
 
+            group("Field Class Types")
+            {
+
+                field("Customer ID"; Rec."Customer ID")
+                {
+                    ToolTip = 'Specifies the value of the Customer ID field.', Comment = '%';
+                }
+                field("Customer Name"; Rec."Customer Name")
+                {
+                    ToolTip = 'Specifies the value of the Customer Name field.', Comment = '%';
+                }
+                field("Sales Document No."; Rec."Sales Document No.")
+                {
+                    ToolTip = 'Specifies the value of the Sales Document No. field.', Comment = '%';
+                }
+                field("Total Amount"; Rec."Total Amount")
+                {
+                    ToolTip = 'Specifies the value of the Total Amount field.', Comment = '%';
+                }
+                field("Average Amount"; Rec."Average Amount")
+                {
+                    ToolTip = 'Specifies the value of the Average Amount field.', Comment = '%';
+                }
+                field(Maximum; Rec.Maximum)
+                {
+                    ToolTip = 'Specifies the value of the Maximum field.', Comment = '%';
+                }
+                field(Mininum; Rec.Mininum)
+                {
+                    ToolTip = 'Specifies the value of the Mininum field.', Comment = '%';
+                }
+                field("Count"; Rec."Count")
+                {
+                    ToolTip = 'Specifies the value of the Count field.', Comment = '%';
+                }
+                field("Exist"; Rec."Exist")
+                {
+                    ToolTip = 'Specifies the value of the Exist field.', Comment = '%';
+                }
+
+            }
+
             grid(Grid1)
             {
 
@@ -96,7 +138,8 @@ page 80103 StudentCard
             part(sales; "Sales Order Subform")
             {
                 ApplicationArea = All;
-                SubPageLink = "Sell-to Customer No." = field("Matric No.");
+                UpdatePropagation = Both;
+                SubPageLink = "Sell-to Customer No." = field("Sales Document No.");
             }
 
         }

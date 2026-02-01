@@ -223,7 +223,9 @@ Page 80100 "Student List"
     begin
         // StudentMgt.learnArray();
 
-        StudentMgt.learnList();
+        // StudentMgt.learnList();
+
+        StudentMgt.learnDictionary();
 
     end;
 
