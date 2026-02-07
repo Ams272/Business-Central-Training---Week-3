@@ -196,6 +196,64 @@ page 80103 StudentCard
                     Rec.Modify();
                 end;
             }
+
+            action(CalcField)
+            {
+                ApplicationArea = All;
+                Image = Calculate;
+                trigger OnAction()
+                var
+                    SchoolFeesPayment: Record "School Fees Payment Header";
+                begin
+                    if SchoolFeesPayment.Get('100') then begin
+
+                        // SchoolFeesPayment.SetAutoCalcFields("Total Line Amount");
+                        SchoolFeesPayment.CalcFields("Total Line Amount");
+                        Message('The Total Line Amount of this Payment is : %1', SchoolFeesPayment."Total Line Amount");
+                    end;
+                end;
+            }
+            action(NormalSummation)
+            {
+                ApplicationArea = All;
+                Image = CalculateBalanceAccount;
+                trigger OnAction()
+                var
+                    SchoolFeesLine: Record "School Fees Payment Lines";
+                    TotalLineAmount: Decimal;
+                begin
+                    TotalLineAmount := 0;
+
+                    SchoolFeesLine.Reset();
+                    SchoolFeesLine.SetRange("Document No.", '200');
+                    if SchoolFeesLine.FindSet() then
+                        repeat
+                            TotalLineAmount := TotalLineAmount + SchoolFeesLine."Payment Ammount";
+                        until SchoolFeesLine.Next() = 0;
+
+                    Message('The Total Line Amount of this Payment using Normal Summation is : %1', TotalLineAmount);
+
+
+                end;
+            }
+            action(CalcSums)
+            {
+                ApplicationArea = All;
+                Image = CalculateBalanceAccount;
+                trigger OnAction()
+                var
+                    SchoolFeesLine: Record "School Fees Payment Lines";
+                    TotalLineAmount: Decimal;
+
+                begin
+                    SchoolFeesLine.Reset();
+                    SchoolFeesLine.SetRange("Document No.", '200');
+                    SchoolFeesLine.CalcSums("Payment Ammount");
+
+                    Message('The Total Line Amount of this Payment using Calcsum Method is : %1', SchoolFeesLine."Payment Ammount");
+
+                end;
+            }
         }
     }
 

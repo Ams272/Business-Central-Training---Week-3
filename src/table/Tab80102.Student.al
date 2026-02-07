@@ -65,6 +65,7 @@ table 80102 Student
         }
         field(145; "Customer ID"; Code[50])
         {
+
             // DataClassification = CustomerContent;
             TableRelation = Customer."No.";
         }
